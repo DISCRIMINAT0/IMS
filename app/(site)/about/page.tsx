@@ -42,26 +42,30 @@ export default function AboutPage() {
 
             {/* Leadership */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Our Leadership</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+                Our Leadership
+              </h2>
               <div className="flex flex-col lg:flex-row gap-6 items-center lg:items-start text-center lg:text-left">
                 <Image
-                  src="/placeholder.svg?height=120&width=120&query=professional%20portrait"
+                  src="/caa2.png?height=120&width=120&query=professional%20portrait"
                   alt="CEO Portrait"
                   width={120}
                   height={120}
-                  className="rounded-full border-4 border-blue-100 shadow-md"
+                  className="rounded-full"
                 />
                 <div>
                   <p className="font-semibold text-lg text-gray-900">
                     Saifuddin Anayat Hussain – Chief Executive Officer
                   </p>
                   <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                    With over 40 years in procurement and supply chain management, our CEO brings visionary leadership
-                    and hands-on expertise in international supplier negotiations and operational excellence.
+                    With over 40 years in procurement and supply chain management, our CEO
+                    brings visionary leadership and hands-on expertise in international
+                    supplier negotiations and operational excellence.
                   </p>
                 </div>
               </div>
             </div>
+
 
             {/* Competitive Edge */}
             <div className="bg-gradient-to-br from-blue-600 to-blue-500 p-8 rounded-2xl shadow-lg">

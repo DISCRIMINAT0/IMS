@@ -12,8 +12,6 @@ const nav = [
   { href: "/services", label: "Services" },
   { href: "/clients", label: "Clients" },
   { href: "/projects", label: "Projects" },
-  { href: "/certifications", label: "Certifications" },
-  { href: "/contact", label: "Contact" },
 ]
 
 export default function SiteHeader() {
@@ -24,23 +22,31 @@ export default function SiteHeader() {
       <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link
+          href="/"
+          className="flex items-center gap-3 shrink-0 pr-4 md:pr-8 pl-4" // extra space before nav on desktop
+        >
           <Image
             src="/android-chrome-512x512.png"
             alt="IMS Logo"
-            width={36}
-            height={36}
+            width={40} // slightly bigger for clarity
+            height={40}
             className="rounded"
           />
-          <div className="flex flex-col leading-tight">
-            <span className="font-bold text-sm md:text-base tracking-tight">
-              IMS - INTERNATIONAL MARKETING SERVICES
+          <div className="flex flex-col leading-snug max-w-xs overflow-hidden">
+            <span className="font-bold text-sm md:text-base tracking-tight break-words">
+              <span className="text-blue-600">IMS - INTERNATIONAL</span>
             </span>
-            <span className="text-[10px] md:text-xs text-muted-foreground">
+            <span className="font-bold text-sm md:text-base tracking-tight break-words">
+              MARKETING SERVICES
+            </span>
+            <span className="text-[10px] md:text-xs text-muted-foreground break-words">
               Where Global Demand Meets Reliable Supply
             </span>
           </div>
+
         </Link>
+
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6">
