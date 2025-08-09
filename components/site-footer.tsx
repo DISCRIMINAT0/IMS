@@ -83,7 +83,7 @@ export default function SiteFooter() {
 
         {/* Contact Info */}
         <div>
-          <h3 className="font-semibold mb-4 text-blue-600 uppercase tracking-wide border-b border-neutral-800 pb-2">
+          <h3 className="text-center md:text-left font-semibold mb-4 text-blue-600 uppercase tracking-wide border-b border-neutral-800 pb-2">
             Contact Us
           </h3>
           <div className="text-sm space-y-3">
