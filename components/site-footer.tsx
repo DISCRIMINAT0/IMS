@@ -50,7 +50,7 @@ export default function SiteFooter() {
 
           {/* Social Links */}
           <div className="flex gap-5">
-            <Link href="#" aria-label="LinkedIn">
+            <Link href="https://pk.linkedin.com/company/international-marketing-services-ims " aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <Linkedin className="h-5 w-5 text-gray-400 hover:text-blue-600 transition-all duration-300 hover:scale-110" />
             </Link>
             <Link href="#" aria-label="Twitter">
