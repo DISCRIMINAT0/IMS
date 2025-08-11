@@ -11,7 +11,8 @@ export default function SiteFooter() {
     { href: "#clients", label: "Clients" },
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
-    { href: "#certifications", label: "Certifications" }
+    { href: "#certifications", label: "Certifications" },
+
   ]
 
   return (

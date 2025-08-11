@@ -8,7 +8,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 type NavItem = {
@@ -98,25 +97,27 @@ export default function SiteHeader() {
     >
       <div className="mx-auto container h-16 flex items-center justify-between px-4 md:px-6">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <div
+          className="flex items-center gap-3 flex-nowrap whitespace-nowrap min-w-0 max-w-full"
+          style={{ minWidth: 0 }}
+        >
           <Image
             src="/android-chrome-512x512.png?height=40&width=40"
             alt="IMS Logo"
             width={40}
             height={40}
-            className="rounded"
+            className="rounded flex-shrink-0"
             priority
           />
-          <div className="leading-tight">
-            <div className="font-extrabold text-[14px] md:text-sm tracking-wide uppercase font-sans">
+          <div className="leading-tight min-w-0 max-w-full">
+            <div className="font-extrabold text-[12px] md:text-sm tracking-wide uppercase font-sans truncate max-w-full">
               <span className="text-blue-700">
                 INTERNATIONAL MARKETING SERVICES
               </span>
             </div>
-            <div className="italic text-[10px] md:text-xs text-slate-500">
+            <div className="italic text-[10px] md:text-xs text-slate-500 truncate max-w-full">
               "Where Global Demand Meets Reliable Supply"
             </div>
-
           </div>
         </div>
 
