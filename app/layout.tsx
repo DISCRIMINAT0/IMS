@@ -4,17 +4,17 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'IMS - INTERNATIONAL MARKETING SERVICES',
+  title: 'INTERNATIONAL MARKETING SERVICES',
   description: 'Where Global Demand Meets Reliable Supply',
   generator: 'Factory Web Services',
   viewport: 'width=device-width, initial-scale=1',
   keywords: 'v0, app, nextjs, geist',
   authors: [{ name: 'Your Name', url: 'https://yourwebsite.com' }],
   openGraph: {
-    title: 'IMS - INTERNATIONAL MARKETING SERVICES',
+    title: 'INTERNATIONAL MARKETING SERVICES',
     description: 'Where Global Demand Meets Reliable Supply',
     url: 'https://yourappdomain.com',
-    siteName: 'IMS - INTERNATIONAL MARKETING SERVICES',
+    siteName: 'INTERNATIONAL MARKETING SERVICES',
     images: [
       {
         url: '/og-image.png',

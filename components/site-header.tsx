@@ -1,72 +1,141 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
-import Image from "next/image"
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-const nav = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/clients", label: "Clients" },
-  { href: "/projects", label: "Projects" },
-]
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+type NavItem = {
+  id: string;
+  label: string;
+};
+
+const NAV_ITEMS: NavItem[] = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "services", label: "Services" },
+  { id: "clients", label: "Clients" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+  { id: "certifications", label: "Certifications" }
+];
 
 export default function SiteHeader() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("home");
+
+  // Set active based on scroll position
+  useEffect(() => {
+    const triggers: ScrollTrigger[] = [];
+
+    NAV_ITEMS.forEach((item) => {
+      const el = document.getElementById(item.id);
+      if (!el) return;
+      const t = ScrollTrigger.create({
+        trigger: el,
+        start: "top center+=40",
+        end: "bottom center-=40",
+        onEnter: () => setActive(item.id),
+        onEnterBack: () => setActive(item.id),
+      });
+      triggers.push(t);
+    });
+
+    return () => {
+      triggers.forEach((t) => t.kill());
+    };
+  }, []);
+
+  const scrollToCenter = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const header = document.getElementById("site-header");
+    const headerH = header ? header.offsetHeight : 64;
+    const targetY =
+      window.scrollY +
+      rect.top -
+      (window.innerHeight - rect.height) / 2 +
+      headerH * 0.25;
+
+    gsap.to(window, { duration: 0.8, ease: "power2.out", scrollTo: targetY });
+  };
+
+  const NavLink = useMemo(
+    () =>
+      function NavLink({ item }: { item: NavItem }) {
+        const isActive = active === item.id;
+        return (
+          <button
+            onClick={() => {
+              setOpen(false);
+              scrollToCenter(item.id);
+            }}
+            className={`px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 
+              ${isActive
+                ? "bg-blue-600 text-white shadow-md"
+                : "text-slate-700 hover:text-blue-700 hover:bg-blue-50"
+              }`}
+            aria-current={isActive ? "page" : undefined}
+          >
+            {item.label}
+          </button>
+        );
+      },
+    [active]
+  );
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-
+    <header
+      id="site-header"
+      className="sticky top-0 z-40 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
+    >
+      <div className="mx-auto container h-16 flex items-center justify-between px-4 md:px-6">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 shrink-0 pr-4 md:pr-8 pl-4" // extra space before nav on desktop
-        >
+        <div className="flex items-center gap-3">
           <Image
-            src="/android-chrome-512x512.png"
+            src="/android-chrome-512x512.png?height=40&width=40"
             alt="IMS Logo"
-            width={40} // slightly bigger for clarity
+            width={40}
             height={40}
             className="rounded"
+            priority
           />
-          <div className="flex flex-col leading-snug max-w-xs overflow-hidden">
-            <span className="font-bold text-sm md:text-base tracking-tight break-words">
-              <span className="text-blue-600">IMS - INTERNATIONAL</span>
-            </span>
-            <span className="font-bold text-sm md:text-base tracking-tight break-words">
-              MARKETING SERVICES
-            </span>
-            <span className="text-[10px] md:text-xs text-muted-foreground break-words">
-              Where Global Demand Meets Reliable Supply
-            </span>
+          <div className="leading-tight">
+            <div className="font-extrabold text-[14px] md:text-sm tracking-wide uppercase font-sans">
+              <span className="text-blue-700">
+                INTERNATIONAL MARKETING SERVICES
+              </span>
+            </div>
+            <div className="italic text-[10px] md:text-xs text-slate-500">
+              "Where Global Demand Meets Reliable Supply"
+            </div>
+
           </div>
-
-        </Link>
-
+        </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
-          {nav.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className="text-sm text-slate-700 hover:text-blue-700 transition-colors"
-            >
-              {n.label}
-            </Link>
+        <nav className="hidden md:flex items-center gap-4">
+          {NAV_ITEMS.map((item) => (
+            <NavLink key={item.id} item={item} />
           ))}
-          <Link href="/contact?type=request-quote">
-            <Button className="bg-blue-600 hover:bg-blue-700">Request Quote</Button>
-          </Link>
+          <Button
+            onClick={() => scrollToCenter("contact")}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            Request Quote
+          </Button>
         </nav>
 
         {/* Mobile Menu Toggle */}
         <button
-          aria-label="Open menu"
+          aria-label="Toggle menu"
           className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border hover:bg-gray-100 transition-colors"
           onClick={() => setOpen((o) => !o)}
         >
@@ -74,42 +143,54 @@ export default function SiteHeader() {
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu */}
       {open && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white border-t shadow-lg animate-slideDown">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {nav.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                className="text-base font-medium text-slate-700 hover:text-blue-700 transition-colors"
-                onClick={() => setOpen(false)}
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                className={`px-3 py-2 rounded-md text-base font-medium transition-all duration-200
+                  ${active === item.id
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-slate-700 hover:text-blue-700 hover:bg-blue-50"
+                  }`}
+                onClick={() => {
+                  scrollToCenter(item.id);
+                  setOpen(false);
+                }}
               >
-                {n.label}
-              </Link>
+                {item.label}
+              </button>
             ))}
-            <Link
-              href="/contact?type=request-quote"
-              onClick={() => setOpen(false)}
+            <Button
+              onClick={() => {
+                scrollToCenter("contact");
+                setOpen(false);
+              }}
+              className="w-full bg-blue-600 hover:bg-blue-700"
             >
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                Request Quote
-              </Button>
-            </Link>
+              Request Quote
+            </Button>
           </div>
         </div>
       )}
 
-      {/* Animation */}
       <style jsx>{`
         @keyframes slideDown {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         .animate-slideDown {
-          animation: slideDown 0.2s ease-out forwards;
+          animation: slideDown 0.18s ease-out forwards;
         }
       `}</style>
     </header>
-  )
+  );
 }
