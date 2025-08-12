@@ -13,6 +13,7 @@ import ClientsSection from "@/components/sections/clients";
 import ProjectsSection from "@/components/sections/projects";
 import ContactSection from "@/components/sections/contact";
 import CertificationsSection from "@/components/sections/certifications";
+import BlueThemeOrgList from "@/components/sections/clients2";
 
 // Hook to check if element is in viewport
 function useOnScreen(ref: React.RefObject<Element>, threshold = 0.5) {
@@ -111,18 +112,28 @@ export default function Page() {
                 <ServicesSection />
             </SectionWrapper>
 
+
+
             <SectionWrapper
-                onEnter={() => reloadSection("Clients")}
-                onLeave={() => resetSection("Clients")}
+                onEnter={() => reloadSection("Services")}
+                onLeave={() => resetSection("Services")}
             >
-                <ClientsSection />
+                <BlueThemeOrgList />
             </SectionWrapper>
+
 
             <SectionWrapper
                 onEnter={() => reloadSection("Projects")}
                 onLeave={() => resetSection("Projects")}
             >
                 <ProjectsSection />
+            </SectionWrapper>
+
+            <SectionWrapper
+                onEnter={() => reloadSection("Clients")}
+                onLeave={() => resetSection("Clients")}
+            >
+                <ClientsSection />
             </SectionWrapper>
 
             <SectionWrapper
@@ -139,7 +150,10 @@ export default function Page() {
                 <CertificationsSection />
             </SectionWrapper>
 
+
+
             <SiteFooter />
         </main>
     );
 }
+

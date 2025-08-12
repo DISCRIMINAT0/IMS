@@ -202,7 +202,7 @@ export default function Clients() {
 
     return (
         <AnimatedSection
-            id="clients"
+            id=""
             className="bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#3949ab] text-white py-14 scroll-mt-24"
             aria-label="Our product categories"
         >
@@ -222,6 +222,8 @@ export default function Clients() {
                     <p className="mt-3 text-blue-200 text-lg max-w-xl mx-auto">
                         Browse our wide range of products by category.
                     </p>
+
+
                 </div>
 
                 {/* Dropdown */}
@@ -283,6 +285,10 @@ export default function Clients() {
                         </button>
                     </div>
                 )}
+
+                <p className="mt-4 text-blue-200 text-lg max-w-xl mx-auto  text-center">
+                    Moreover we deal in other items too and participate in Tender and&nbsp;respond&nbsp;to&nbsp;RHQ
+                </p>
             </div>
         </AnimatedSection>
     );
