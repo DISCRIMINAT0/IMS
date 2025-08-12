@@ -24,8 +24,8 @@ export default function SiteFooter() {
         <div className="container px-4 md:px-6 py-12 grid gap-10 md:grid-cols-3">
           {/* Logo & Social */}
           <div className="flex flex-col items-center text-center space-y-4">
-            {/* Logo + Name always in one line */}
-            <div className="flex items-center justify-center gap-4 whitespace-nowrap">
+            {/* Logo + Name always in one line on md+, stacked on mobile */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 whitespace-nowrap">
               <Image
                 src="/android-chrome-512x512.png?height=64&width=64"
                 alt="IMS Logo"
@@ -33,7 +33,7 @@ export default function SiteFooter() {
                 height={64}
                 className="rounded-xl shadow-lg ring-2 ring-blue-600/30 hover:scale-105 transition-transform duration-300 flex-shrink-0"
               />
-              <h2 className="text-blue-200 font-extrabold text-lg md:text-xl tracking-wide leading-tight">
+              <h2 className="text-blue-200 font-extrabold text-lg md:text-lg tracking-wide leading-tight">
                 INTERNATIONAL MARKETING SERVICES
               </h2>
             </div>
@@ -62,12 +62,13 @@ export default function SiteFooter() {
 
 
 
+
           {/* Quick Links */}
           <nav className="text-center md:text-left">
             <h3 className="font-semibold mb-4 text-blue-300 uppercase tracking-wide border-b border-blue-800/60 pb-2">
               Quick Links
             </h3>
-            <ul className="grid grid-cols-2 gap-2 text-sm">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
               {links.map((l) => (
                 <li key={l.href}>
                   <Link
