@@ -15,7 +15,6 @@ const POINTS = [
 
 const SNAPSHOT = [
     { icon: CalendarDays, text: "Founded: 1985" },
-    { icon: Award, text: "ISO 9001:2008 Certified" },
     { icon: Landmark, text: "Govt & Private Sector Supplier" },
     { icon: MapPin, text: "Offices in Karachi & Rawalpindi" },
     { icon: Truck, text: "Nationwide Coverage" },

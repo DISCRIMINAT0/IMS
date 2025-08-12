@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,6 +10,8 @@ import AnimatedSection from "@/components/animated-section";
 import AnimatedText from "@/components/animated-text";
 
 gsap.registerPlugin(ScrollTrigger);
+
+
 
 const DATA = [
     { item: "Stainless Steel Plate grade 430", category: "Metal" },
@@ -78,8 +81,9 @@ const DATA = [
     { item: "Smart LED TV", category: "Household Item" },
     { item: "Oil and Air Filters", category: "Lubricants" },
 ];
+export default function Clients() {
+    const pathname = usePathname();
 
-export default function clients() {
     const headerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
 
@@ -108,7 +112,7 @@ export default function clients() {
 
     const visibleItems = filteredItems.slice(0, visibleCount);
 
-    // Scroll + fade animations
+    // GSAP scroll animations for header and cards
     useEffect(() => {
         const ctx = gsap.context(() => {
             if (headerRef.current) {
@@ -160,12 +164,8 @@ export default function clients() {
             })
         );
 
-        const enterHandlers = hoverTweens.map(
-            (tween, i) => () => tween.play()
-        );
-        const leaveHandlers = hoverTweens.map(
-            (tween, i) => () => tween.reverse()
-        );
+        const enterHandlers = hoverTweens.map((tween) => () => tween.play());
+        const leaveHandlers = hoverTweens.map((tween) => () => tween.reverse());
 
         cards.forEach((el, i) => {
             el.addEventListener("mouseenter", enterHandlers[i]);
@@ -180,6 +180,21 @@ export default function clients() {
         };
     }, [visibleItems]);
 
+    // Scroll smoothly to #category-items on route/hash change with offset for fixed header
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        if (window.location.hash === "#category-items") {
+            const el = document.getElementById("category-items");
+            if (el) {
+                setTimeout(() => {
+                    const yOffset = -80; // Adjust this to your fixed header height if any
+                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                }, 300); // 300ms delay to ensure element is rendered and animated
+            }
+        }
+    }, [pathname]);
+
     function onCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setSelectedCategory(e.target.value);
         setVisibleCount(5);
@@ -187,13 +202,17 @@ export default function clients() {
 
     return (
         <AnimatedSection
-            id="category-items"
-            className="bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#3949ab] text-white py-14"
-            style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+            id="clients"
+            className="bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#3949ab] text-white py-14 scroll-mt-24"
+            aria-label="Our product categories"
         >
             <div className="container px-6 max-w-7xl mx-auto">
                 {/* Header */}
-                <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-10">
+                <div
+                    ref={headerRef}
+                    className="text-center max-w-3xl mx-auto mb-10"
+                    aria-label="Product Categories Header"
+                >
                     <AnimatedText
                         as="h2"
                         text="Our Product Categories"
