@@ -33,9 +33,10 @@ export default function SiteFooter() {
                 height={64}
                 className="rounded-xl shadow-lg ring-2 ring-blue-600/30 hover:scale-105 transition-transform duration-300 flex-shrink-0"
               />
-              <h2 className="text-blue-200 font-extrabold text-lg md:text-lg tracking-wide leading-tight">
+              <h2 className="text-blue-200 font-extrabold text-base md:text-lg tracking-wide leading-tight">
                 INTERNATIONAL MARKETING SERVICES
               </h2>
+
             </div>
 
             {/* Tagline */}
@@ -83,27 +84,37 @@ export default function SiteFooter() {
           </nav>
 
           {/* Contact Info */}
-          <div>
-            <h3 className="text-center md:text-left font-semibold mb-4 text-blue-300 uppercase tracking-wide border-b border-blue-800/60 pb-2">
+          <div className="mx-auto px-4 text-center md:text-left max-w-md md:max-w-none">
+            <h3 className="font-semibold mb-4 text-blue-300 uppercase tracking-wide border-b border-blue-800/60 pb-2">
               Contact Us
             </h3>
-            <div className="text-sm space-y-3">
+            <div className="text-sm space-y-4">
               {[
                 "A-149, Block C, North Nazimabad, Karachi-74700",
                 "Office #418, Industrial Town Plaza, Sharah-e-Liaquat, Karachi-74000",
                 "Shop #217/19, Saleh Market, Adamjee Road, Saddar Cantt, Rawalpindi-46000",
               ].map((address, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 mt-0.5 text-blue-300" />
-                  <span className="text-blue-100/90">{address}</span>
+                <div
+                  key={idx}
+                  className="flex items-start md:items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap"
+                >
+                  <MapPin className="h-5 w-5 text-blue-300 flex-shrink-0 mt-1 md:mt-0" />
+                  <span className="text-blue-100/90 break-words max-w-full md:max-w-lg">
+                    {address}
+                  </span>
                 </div>
               ))}
-              <div className="flex items-center gap-3 pt-2">
-                <Mail className="h-5 w-5 text-blue-300" />
-                <span className="hover:text-white cursor-pointer transition-colors">info@ims-pk.com</span>
+              <div className="flex items-center justify-center md:justify-start gap-3 pt-2 flex-wrap md:flex-nowrap">
+                <Mail className="h-5 w-5 text-blue-300 flex-shrink-0" />
+                <span className="hover:text-white cursor-pointer transition-colors break-words">
+                  info@ims-pk.com
+                </span>
               </div>
             </div>
           </div>
+
+
+
         </div>
 
         {/* Bottom bar */}
