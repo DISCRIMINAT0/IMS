@@ -106,7 +106,7 @@ export default function HeroSection() {
     return (
         <section
             id="home"
-            className="relative scroll-mt-[96px] pt-16 md:pt-24 pb-8 md:pb-20 bg-gradient-to-b from-blue-50 via-white to-white"
+            className="relative scroll-mt-[96px] pt-20 md:pt-24 pb-8 md:pb-20 bg-gradient-to-b from-blue-50 via-white to-white"
         >
             <SectionContainer>
                 <div className="grid items-center justify-items-center gap-8 lg:gap-16 lg:grid-cols-2">
