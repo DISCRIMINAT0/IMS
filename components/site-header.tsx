@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import OptimizedImage from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -105,7 +106,7 @@ export default function SiteHeader() {
           className="flex items-center gap-3 flex-nowrap whitespace-nowrap min-w-0 max-w-full"
           style={{ minWidth: 0 }}
         >
-          <Image
+          <OptimizedImage
             src="/android-chrome-512x512.png?height=40&width=40"
             alt="IMS Logo"
             width={40}

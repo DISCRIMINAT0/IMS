@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Linkedin, MapPin, Mail } from "lucide-react";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
@@ -25,12 +26,13 @@ export default function SiteFooter() {
           {/* Logo & Social */}
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="flex flex-col items-center justify-center gap-2">
-              <Image
+              <OptimizedImage
                 src="/android-chrome-512x512.png?height=64&width=64"
                 alt="IMS Logo"
                 width={64}
                 height={64}
                 className="rounded-xl shadow-lg ring-2 ring-blue-600/30 hover:scale-105 transition-transform duration-300"
+                priority
               />
               <h2 className="text-blue-200 font-extrabold text-base tracking-wide leading-tight">
                 INTERNATIONAL MARKETING SERVICES

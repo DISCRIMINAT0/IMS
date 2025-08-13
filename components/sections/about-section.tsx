@@ -4,6 +4,7 @@ import AnimatedText from "@/components/animated-text"
 import StaggerOnView from "@/components/stagger-on-view"
 import Reveal from "@/components/reveal"
 import { CalendarDays, Award, Landmark, MapPin, Truck, CheckCircle2 } from "lucide-react"
+import OptimizedImage from "@/components/OptimizedImage";
 
 const POINTS = [
     "Extensive global supplier network",
@@ -59,12 +60,13 @@ export default function AboutSection() {
                             />
                             <div className="flex flex-col lg:flex-row gap-6 items-center lg:items-start text-center lg:text-left">
                                 <Reveal radius="rounded-full">
-                                    <Image
+                                    <OptimizedImage
                                         src="/caa2.png?height=140&width=140"
                                         alt="CEO Portrait"
                                         width={140}
                                         height={140}
                                         className="rounded-full"
+                                        priority
                                     />
                                 </Reveal>
                                 <div>

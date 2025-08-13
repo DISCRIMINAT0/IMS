@@ -9,7 +9,7 @@ import ParallaxShapes from "@/components/parallax-shapes";
 import Image from "next/image";
 import { ScrollTrigger } from "gsap/all";
 import QuickFacts from "./quick-facts";
-
+import OptimizedImage from "@/components/OptimizedImage";
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 // ✅ Reusable container for consistent spacing
@@ -164,12 +164,13 @@ export default function HeroSection() {
 
                     {/* Right Column */}
                     <div ref={imageRef} className="flex justify-center relative">
-                        <Image
+                        <OptimizedImage
                             src="/image.png"
                             alt="Engineering and Technical Equipment"
                             width={500}
                             height={400}
                             className="rounded-xl shadow-2xl w-full max-w-sm md:max-w-lg h-auto"
+                            priority
                         />
                         <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100">
                             <div className="flex items-center space-x-3">

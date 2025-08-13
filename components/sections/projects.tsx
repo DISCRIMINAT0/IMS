@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import AnimatedSection from "@/components/animated-section"
+import OptimizedImage from "@/components/OptimizedImage";
 
 const STATUS = {
     Ongoing: "bg-blue-100 text-blue-800",
@@ -20,7 +21,8 @@ const PROJECTS = [
         client: "ATG AIRPORTS, UK",
         status: "Available",
         summary: "Supply of Airfield Runway Lights lamps sourced from ATG AIRPORTS, UK.",
-        image: "/project/afl.jpeg"
+        image: "/project/afl.jpeg",
+
     },
     {
         id: "d2",
@@ -220,7 +222,7 @@ export default function ProjectsSection() {
                                 className="flex-shrink-0 w-72 sm:w-80 lg:w-96 snap-center bg-white shadow-md hover:shadow-xl transition-all duration-300 border"
                             >
                                 <div className="overflow-hidden h-40">
-                                    <Image
+                                    <OptimizedImage
                                         src={p.image || "/placeholder.svg"}
                                         alt={p.title}
                                         width={640}
@@ -229,12 +231,19 @@ export default function ProjectsSection() {
                                     />
                                 </div>
                                 <CardHeader>
-                                    <CardTitle className="text-base sm:text-lg font-semibold line-clamp-1">{p.title}</CardTitle>
+                                    <CardTitle className="text-base sm:text-lg font-semibold line-clamp-1">
+                                        {p.title}
+                                    </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-3">
-                                    <p className="text-sm text-muted-foreground line-clamp-2">{p.summary}</p>
+                                    <p className="text-sm text-muted-foreground line-clamp-2">
+                                        {p.summary}
+                                    </p>
                                     <div className="flex flex-wrap justify-center gap-2">
-                                        <Badge variant="secondary" className="px-3 py-1 text-xs font-medium">
+                                        <Badge
+                                            variant="secondary"
+                                            className="px-3 py-1 text-xs font-medium"
+                                        >
                                             {p.client}
                                         </Badge>
                                         <Badge
@@ -247,6 +256,8 @@ export default function ProjectsSection() {
                                 <CardFooter className="flex justify-center" />
                             </Card>
                         ))}
+
+
                     </div>
 
                     {/* Right Arrow Button */}

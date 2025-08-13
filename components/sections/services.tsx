@@ -10,6 +10,7 @@ import AnimatedSection from "@/components/animated-section";
 import AnimatedText from "@/components/animated-text";
 import Reveal from "@/components/reveal";
 import StaggerOnView from "@/components/stagger-on-view";
+import OptimizedImage from "@/components/OptimizedImage";
 import {
     PackageSearch,
     ShieldCheck,
@@ -83,7 +84,8 @@ export default function ServicesSection() {
                             {
                                 icon: PackageSearch,
                                 title: "General Order Supply",
-                                img: "/gos.jpg?height=140&width=280",
+                                img: "/gos.jpg",
+                                blur: "/blur/gos.jpg",
                                 items: [
                                     "Office supplies & equipment",
                                     "Industrial tools & machinery",
@@ -93,7 +95,8 @@ export default function ServicesSection() {
                             {
                                 icon: ShieldCheck,
                                 title: "Importation Services",
-                                img: "/impexp.jpeg?height=140&width=280",
+                                img: "/impexp.jpeg",
+                                blur: "/blur/impexp.jpeg",
                                 items: [
                                     "Product sourcing & procurement",
                                     "Quality control & assurance",
@@ -103,7 +106,8 @@ export default function ServicesSection() {
                             {
                                 icon: Truck,
                                 title: "Logistics & Delivery",
-                                img: "/logdel.jpeg?height=140&width=280",
+                                img: "/logdel.jpeg",
+                                blur: "/blur/logdel.jpeg",
                                 items: [
                                     "Nationwide distribution",
                                     "Vendor coordination",
@@ -113,7 +117,8 @@ export default function ServicesSection() {
                             {
                                 icon: Wrench,
                                 title: "Local Purchase Solutions",
-                                img: "/locpurc.webp?height=140&width=280",
+                                img: "/locpurc.webp",
+                                blur: "/blur/locpurc.webp",
                                 items: [
                                     "Swift sourcing & delivery",
                                     "Competitive local pricing",
@@ -133,11 +138,12 @@ export default function ServicesSection() {
                                 </CardHeader>
                                 <CardContent className="space-y-3">
                                     <Reveal>
-                                        <Image
+                                        <OptimizedImage
                                             src={service.img}
                                             alt={service.title}
                                             width={560}
                                             height={280}
+                                            blurDataURL={service.blur}
                                             className="w-full h-32 sm:h-36 object-cover rounded-md"
                                         />
                                     </Reveal>
@@ -151,6 +157,7 @@ export default function ServicesSection() {
                         ))}
                     </div>
                 </StaggerOnView>
+
 
                 {/* Badges */}
                 <div className="mt-8 flex flex-wrap justify-center gap-2 sm:gap-3">
