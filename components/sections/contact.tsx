@@ -25,7 +25,7 @@ function ContactCard({
     return (
         <div
             {...props}
-            className="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:scale-[1.02] transition-transform"
+            className="bg-white m-0 p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:scale-[1.02] transition-transform"
         >
             <h2 className="font-semibold text-lg text-blue-600">{title}</h2>
             {address && (

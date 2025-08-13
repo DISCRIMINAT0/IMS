@@ -4,12 +4,22 @@ import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { ScrollToPlugin, } from "gsap/ScrollToPlugin";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import ParallaxShapes from "@/components/parallax-shapes";
 import Image from "next/image";
 import { ScrollTrigger } from "gsap/all";
+import QuickFacts from "./quick-facts";
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+
+// ✅ Reusable container for consistent spacing
+function SectionContainer({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            {children}
+        </div>
+    );
+}
 
 export default function HeroSection() {
     const scrollToCenter = useCallback((id: string) => {
@@ -32,15 +42,14 @@ export default function HeroSection() {
     const buttonsRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
 
-
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: "#home",      // start anim when hero section is visible
-                    start: "top 80%",      // when top of hero hits 80% of viewport
-                    once: true,            // only animate once
-                }
+                    trigger: "#home",
+                    start: "top 80%",
+                    once: true,
+                },
             });
 
             tl.from(taglineRef.current, {
@@ -97,9 +106,9 @@ export default function HeroSection() {
     return (
         <section
             id="home"
-            className="relative scroll-mt-24 py-8 md:py-20 bg-gradient-to-b from-blue-50 via-white to-white"
+            className="relative scroll-mt-[96px] pt-16 md:pt-24 pb-8 md:pb-20 bg-gradient-to-b from-blue-50 via-white to-white"
         >
-            <div className="container px-4 md:px-6">
+            <SectionContainer>
                 <div className="grid items-center justify-items-center gap-8 lg:gap-16 lg:grid-cols-2">
                     {/* Left Column */}
                     <div className="max-w-xl text-center lg:text-left">
@@ -130,8 +139,7 @@ export default function HeroSection() {
                             ref={descRef}
                             className="mt-4 text-base md:text-lg text-slate-600 leading-relaxed max-w-md mx-auto lg:mx-0"
                         >
-                            excellence for government and private sector
-                            organizations.
+                            excellence for government and private sector organizations.
                         </p>
 
                         <div
@@ -155,10 +163,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Right Column */}
-                    <div
-                        ref={imageRef}
-                        className="flex justify-center relative"
-                    >
+                    <div ref={imageRef} className="flex justify-center relative">
                         <Image
                             src="/image.png"
                             alt="Engineering and Technical Equipment"
@@ -173,13 +178,12 @@ export default function HeroSection() {
                                     <div className="font-semibold text-gray-900 text-sm md:text-base">
                                         Quality Assured
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </SectionContainer>
 
             <ParallaxShapes />
 
@@ -187,6 +191,10 @@ export default function HeroSection() {
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 -bottom-16 h-32 bg-gradient-to-b from-transparent to-white"
             />
+
+            <div className="mb-[100px]" />
+
+            <QuickFacts />
         </section>
     );
 }

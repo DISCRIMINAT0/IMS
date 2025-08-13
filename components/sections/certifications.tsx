@@ -16,12 +16,12 @@ const CERTIFICATIONS = [
 
 export default function CertificationsSection() {
     return (
-        <AnimatedSection id="certifications" className="bg-gray-50 py-10 md:py-14">
-            <div className="container px-4 md:px-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-slate-800">
+        <AnimatedSection id="certifications" className="bg-gray-50 py-8 sm:py-10 md:py-14">
+            <div className="mx-auto max-w-screen-xl px-3 sm:px-4 md:px-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8 text-slate-800">
                     Certifications
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 place-items-center">
                     {CERTIFICATIONS.map((src, index) => (
                         <div
                             key={index}

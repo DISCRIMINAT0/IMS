@@ -24,7 +24,7 @@ export default function AboutSection() {
     return (
         <AnimatedSection
             id="about"
-            className="bg-gradient-to-b from-white via-blue-50/30 to-white pt-0"
+            className="bg-gradient-to-b from-white via-blue-50/30 to-white pt-0 m-0"
         >
             <div className="container mx-auto px-4 md:px-8">
                 <div className="max-w-4xl mx-auto text-center mb-10 md:mb-16 mt-0">

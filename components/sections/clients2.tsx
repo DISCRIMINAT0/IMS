@@ -35,7 +35,7 @@ const organizations = [
 
 export default function BlueThemeOrgList() {
     return (
-        <AnimatedSection id="clients">
+        <AnimatedSection id="clients" className="m-0">
             <section className="relative bg-gradient-to-r from-blue-800 to-blue-900 text-white py-16 px-8 sm:px-14 md:px-28 rounded-3xl shadow-2xl max-w-5xl mx-auto overflow-hidden">
                 {/* Background blur overlay */}
                 <div

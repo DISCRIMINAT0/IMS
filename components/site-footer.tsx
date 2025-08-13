@@ -1,9 +1,9 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Facebook, Linkedin, Twitter, MapPin, Mail } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Linkedin, MapPin, Mail } from "lucide-react";
 
 export default function SiteFooter() {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
   const links = [
     { href: "#home", label: "Home" },
     { href: "#about", label: "About" },
@@ -12,8 +12,7 @@ export default function SiteFooter() {
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
     { href: "#certifications", label: "Certifications" },
-
-  ]
+  ];
 
   return (
     <footer className="relative">
@@ -21,25 +20,23 @@ export default function SiteFooter() {
       <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500" />
 
       <div className="bg-gradient-to-b from-blue-950 via-blue-900 to-blue-950 text-blue-100">
-        <div className="container px-4 md:px-6 py-12 grid gap-10 md:grid-cols-3">
+        {/* Main content */}
+        <div className="container max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14 grid gap-10 md:grid-cols-3">
           {/* Logo & Social */}
           <div className="flex flex-col items-center text-center space-y-4">
-            {/* Logo + Name always in one line on md+, stacked on mobile */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 whitespace-nowrap">
+            <div className="flex flex-col items-center justify-center gap-2">
               <Image
                 src="/android-chrome-512x512.png?height=64&width=64"
                 alt="IMS Logo"
                 width={64}
                 height={64}
-                className="rounded-xl shadow-lg ring-2 ring-blue-600/30 hover:scale-105 transition-transform duration-300 flex-shrink-0"
+                className="rounded-xl shadow-lg ring-2 ring-blue-600/30 hover:scale-105 transition-transform duration-300"
               />
-              <h2 className="text-blue-200 font-extrabold text-base md:text-lg tracking-wide leading-tight">
+              <h2 className="text-blue-200 font-extrabold text-base tracking-wide leading-tight">
                 INTERNATIONAL MARKETING SERVICES
               </h2>
-
             </div>
 
-            {/* Tagline */}
             <p className="text-blue-300/80 text-sm italic max-w-xs leading-relaxed">
               Since 1985 —{" "}
               <span className="text-blue-100/90">
@@ -47,7 +44,6 @@ export default function SiteFooter() {
               </span>
             </p>
 
-            {/* Social Icons */}
             <div className="flex gap-4">
               <Link
                 href="https://pk.linkedin.com/company/international-marketing-services-ims"
@@ -60,9 +56,6 @@ export default function SiteFooter() {
               </Link>
             </div>
           </div>
-
-
-
 
           {/* Quick Links */}
           <nav className="text-center md:text-left">
@@ -84,7 +77,7 @@ export default function SiteFooter() {
           </nav>
 
           {/* Contact Info */}
-          <div className="mx-auto px-4 text-center md:text-left max-w-md md:max-w-none">
+          <div className="text-center md:text-left max-w-md md:max-w-none mx-auto">
             <h3 className="font-semibold mb-4 text-blue-300 uppercase tracking-wide border-b border-blue-800/60 pb-2">
               Contact Us
             </h3>
@@ -96,36 +89,29 @@ export default function SiteFooter() {
               ].map((address, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start md:items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap"
+                  className="flex items-start md:items-center gap-3 justify-center md:justify-start"
                 >
-                  <MapPin className="h-5 w-5 text-blue-300 flex-shrink-0 mt-1 md:mt-0" />
-                  <span className="text-blue-100/90 break-words max-w-full md:max-w-lg">
-                    {address}
-                  </span>
+                  <MapPin className="h-5 w-5 text-blue-300 flex-shrink-0" />
+                  <span className="text-blue-100/90">{address}</span>
                 </div>
               ))}
-              <div className="flex items-center justify-center md:justify-start gap-3 pt-2 flex-wrap md:flex-nowrap">
+              <div className="flex items-center gap-3 justify-center md:justify-start pt-2">
                 <Mail className="h-5 w-5 text-blue-300 flex-shrink-0" />
-                <span className="hover:text-white cursor-pointer transition-colors break-words">
+                <span className="hover:text-white cursor-pointer transition-colors">
                   info@ims-pk.com
                 </span>
               </div>
             </div>
           </div>
-
-
-
         </div>
 
         {/* Bottom bar */}
         <div className="border-t border-blue-800/50">
-          <div className="container px-4 md:px-6 py-4 text-xs text-blue-200/80 flex justify-center">
+          <div className="container max-w-7xl mx-auto px-4 md:px-6 py-4 text-xs text-blue-200/80 flex justify-center">
             <p>© {year} IMS. All rights reserved.</p>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
-
-

@@ -36,13 +36,17 @@ export default function SiteHeader() {
     NAV_ITEMS.forEach((item) => {
       const el = document.getElementById(item.id);
       if (!el) return;
+
       const t = ScrollTrigger.create({
         trigger: el,
-        start: "top center+=40",
-        end: "bottom center-=40",
-        onEnter: () => setActive(item.id),
-        onEnterBack: () => setActive(item.id),
+        start: "top top+=64", // start when section top reaches header height
+        end: "bottom top+=64", // end when section bottom reaches header height
+        onToggle: (self) => {
+          if (self.isActive) setActive(item.id);
+        },
+        scrub: true // keeps updating during scroll
       });
+
       triggers.push(t);
     });
 
@@ -93,7 +97,7 @@ export default function SiteHeader() {
   return (
     <header
       id="site-header"
-      className="sticky top-0 z-40 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
+      className="fixed  top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
     >
       <div className="mx-auto container h-16 flex items-center justify-between px-4 md:px-6">
         {/* Logo */}

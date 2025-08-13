@@ -61,8 +61,7 @@ function SectionWrapper({
     return (
         <div
             ref={ref}
-            className="scroll-mt-20"
-            style={{ marginBottom: "100px" }}
+
         >
             {children}
         </div>
@@ -81,7 +80,7 @@ export default function Page() {
     };
 
     return (
-        <main className="min-h-[100vh] bg-white">
+        <main className="min-h-screen bg-white overflow-x-hidden">
             <SiteHeader />
 
             <SectionWrapper
@@ -91,12 +90,7 @@ export default function Page() {
                 <HeroSection />
             </SectionWrapper>
 
-            <SectionWrapper
-                onEnter={() => reloadSection("QuickFacts")}
-                onLeave={() => resetSection("QuickFacts")}
-            >
-                <QuickFacts />
-            </SectionWrapper>
+
 
             <SectionWrapper
                 onEnter={() => reloadSection("About")}

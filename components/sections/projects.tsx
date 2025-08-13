@@ -12,6 +12,7 @@ const STATUS = {
     Planned: "bg-amber-100 text-amber-800",
     Available: "bg-purple-100 text-purple-800",
 }
+
 const PROJECTS = [
     {
         id: "d1",
@@ -121,87 +122,162 @@ const PROJECTS = [
 
 export default function ProjectsSection() {
     const titleRef = useRef<HTMLHeadingElement>(null)
-    const underlineRef = useRef<HTMLSpanElement>(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+    // GSAP Animation for Title
     useEffect(() => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-
         tl.fromTo(
             titleRef.current,
             { opacity: 0, y: 50 },
-            {
-                opacity: 1, y: 0, duration: 1.2, // slower fade in
-                stagger: 0.05,
-            }
-        )
-        tl.fromTo(
-            underlineRef.current,
-            { width: 0 },
-            {
-                width: "14rem", duration: 1.2, // slower fade in
-                stagger: 0.05,
-            },
-            "-=0.5"
+            { opacity: 1, y: 0, duration: 1.2 }
         )
     }, [])
 
+    // Scroll functions
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" })
+        }
+    }
+
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" })
+        }
+    }
+
+    // 🔑 Keyboard Arrow Key Support
+    useEffect(() => {
+        const container = scrollContainerRef.current
+        if (!container) return
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Only trigger if user is not typing in an input/textarea
+            const activeElement = document.activeElement
+            const isInput = ["INPUT", "TEXTAREA"].includes(activeElement?.tagName || "")
+
+            if (isInput) return // Don't interfere with typing
+
+            if (e.key === "ArrowLeft") {
+                e.preventDefault()
+                scrollLeft()
+            } else if (e.key === "ArrowRight") {
+                e.preventDefault()
+                scrollRight()
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown)
+        return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [])
+
     return (
-        <AnimatedSection id="projects">
-            <div className="container px-4 md:px-6">
-                <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
+        <AnimatedSection id="projects" className="m-0 py-12">
+            <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+                {/* Section Header */}
+                <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10">
                     <h2
                         ref={titleRef}
-                        className="text-3xl md:text-4xl font-bold tracking-tight relative inline-block text-blue-600"
+                        className="text-3xl md:text-4xl font-bold tracking-tight text-blue-600"
                     >
                         Current Projects
-
                     </h2>
 
-                    <p className="mt-4 text-muted-foreground">
-                        At <span className="font-semibold">International Marketing Services</span>, every project is a step toward
-                        innovation and growth. From <span className="font-semibold">tech-driven solutions</span> to
-                        <span className="font-semibold"> strategic global partnerships</span>, our work reflects our commitment to
+                    <p className="mt-4 text-muted-foreground leading-relaxed">
+                        At{" "}
+                        <span className="font-semibold">International Marketing Services</span>, every project is a step toward
+                        innovation and growth. From{" "}
+                        <span className="font-semibold">tech-driven solutions</span> to{" "}
+                        <span className="font-semibold">strategic global partnerships</span>, our work reflects our commitment to
                         excellence, sustainability, and lasting impact. Browse our current projects to see how we’re making ideas
                         happen — today and for the future.
                     </p>
                 </div>
 
-                <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 place-items-center">
-                    {PROJECTS.map((p) => (
-                        <Card
-                            key={p.id}
-                            className="overflow-hidden w-full max-w-sm transition-transform transform hover:scale-105 hover:shadow-lg"
-                        >
-                            <div className="overflow-hidden">
-                                <Image
-                                    src={p.image || "/placeholder.svg"}
-                                    alt={p.title}
-                                    width={640}
-                                    height={320}
-                                    className="w-full h-40 object-cover rounded-t-md"
-                                />
-                            </div>
-                            <CardHeader className="text-center">
-                                <CardTitle className="text-lg font-semibold">{p.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-3 text-center">
-                                <p className="text-sm text-muted-foreground">{p.summary}</p>
-                                <div className="flex flex-wrap justify-center gap-2">
-                                    <Badge variant="secondary" className="px-3 py-1 text-sm font-medium">
-                                        {p.client}
-                                    </Badge>
-                                    <Badge
-                                        className={`${(STATUS as any)[p.status] || "bg-gray-100 text-gray-800"} px-3 py-1 text-sm font-medium`}
-                                    >
-                                        {p.status}
-                                    </Badge>
+                {/* Scrollable Projects with Arrows */}
+                <div className="relative max-w-7xl mx-auto">
+                    {/* Left Arrow Button */}
+                    <button
+                        onClick={scrollLeft}
+                        className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform hover:scale-105"
+                        aria-label="Scroll left"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+
+                    {/* Scroll Container */}
+                    <div
+                        ref={scrollContainerRef}
+                        className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-4 sm:px-6 lg:px-8 pb-6"
+                        style={{ scrollPadding: "1rem" }}
+                    >
+                        {PROJECTS.map((p) => (
+                            <Card
+                                key={p.id}
+                                className="flex-shrink-0 w-72 sm:w-80 lg:w-96 snap-center bg-white shadow-md hover:shadow-xl transition-all duration-300 border"
+                            >
+                                <div className="overflow-hidden h-40">
+                                    <Image
+                                        src={p.image || "/placeholder.svg"}
+                                        alt={p.title}
+                                        width={640}
+                                        height={320}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
-                            </CardContent>
-                            <CardFooter className="justify-center" />
-                        </Card>
-                    ))}
+                                <CardHeader>
+                                    <CardTitle className="text-base sm:text-lg font-semibold line-clamp-1">{p.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-3">
+                                    <p className="text-sm text-muted-foreground line-clamp-2">{p.summary}</p>
+                                    <div className="flex flex-wrap justify-center gap-2">
+                                        <Badge variant="secondary" className="px-3 py-1 text-xs font-medium">
+                                            {p.client}
+                                        </Badge>
+                                        <Badge
+                                            className={`${(STATUS as any)[p.status] || "bg-gray-100 text-gray-800"} px-3 py-1 text-xs font-medium`}
+                                        >
+                                            {p.status}
+                                        </Badge>
+                                    </div>
+                                </CardContent>
+                                <CardFooter className="flex justify-center" />
+                            </Card>
+                        ))}
+                    </div>
+
+                    {/* Right Arrow Button */}
+                    <button
+                        onClick={scrollRight}
+                        className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform hover:scale-105"
+                        aria-label="Scroll right"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
+
+            {/* Custom Scrollbar (Optional) */}
+            <style jsx>{`
+                ::-webkit-scrollbar {
+                    height: 8px;
+                }
+                ::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background-color: rgba(155, 155, 155, 0.4);
+                    border-radius: 6px;
+                }
+                ::-webkit-scrollbar-thumb:hover {
+                    background-color: rgba(155, 155, 155, 0.7);
+                }
+            `}</style>
         </AnimatedSection>
     )
 }
