@@ -59,13 +59,13 @@ export default function AboutSection() {
                                 className="text-xl md:text-2xl font-semibold text-gray-900 mb-5 text-center mt-0"
                             />
                             <div className="flex flex-col lg:flex-row gap-6 items-center lg:items-start text-center lg:text-left">
-                                <Reveal radius="rounded-full">
+                                <Reveal radius="rounded-full border">
                                     <OptimizedImage
-                                        src="/caa2.png?height=140&width=140"
+                                        src="/caa3.jpg?height=140&width=140"
                                         alt="CEO Portrait"
                                         width={140}
                                         height={140}
-                                        className="rounded-full"
+                                        className="rounded-full border"
                                         priority
                                     />
                                 </Reveal>
