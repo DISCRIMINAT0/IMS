@@ -107,18 +107,20 @@ export default function SiteHeader() {
           style={{ minWidth: 0 }}
         >
           <OptimizedImage
-            src="/android-chrome-512x512.png?height=40&width=40"
+            src="/logo.jpg?height=50&width=50"
             alt="IMS Logo"
-            width={40}
-            height={40}
+            width={50}
+            height={50}
             className="rounded flex-shrink-0"
             priority
           />
           <div className="leading-tight min-w-0 max-w-full">
-            <div className="font-extrabold text-[12px] md:text-sm tracking-wide uppercase font-sans truncate max-w-full">
-              <span className="text-blue-700">
+            <div className="font-extrabold text-[10px] md:text-xs tracking-wide uppercase font-sans truncate max-w-full">
+              <span className="text-blue-700 font-montserrat uppercase tracking-widest">
                 INTERNATIONAL MARKETING SERVICES
               </span>
+
+
             </div>
             <div className="italic text-[10px] md:text-xs text-slate-500 truncate max-w-full">
               "Where Global Demand Meets Reliable Supply"

@@ -1,6 +1,6 @@
-"use client"; // needed if you are using hooks in Next.js app router
+"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
@@ -15,29 +15,41 @@ import ContactSection from "@/components/sections/contact";
 import CertificationsSection from "@/components/sections/certifications";
 import BlueThemeOrgList from "@/components/sections/clients2";
 
-// Hook to check if element is in viewport
-function useOnScreen(ref: React.RefObject<Element>, threshold = 0.5) {
+/**
+ * Hook to check if element is in viewport
+ * @param ref - React ref for the element to observe
+ * @param threshold - Intersection ratio to trigger visibility
+ */
+function useOnScreen<T extends Element>(
+    ref: React.RefObject<T | null>, // <-- accept null
+    threshold = 0.5
+) {
     const [isIntersecting, setIntersecting] = useState(false);
 
+    const options = useMemo(() => ({ threshold }), [threshold]);
+
     useEffect(() => {
+        const current = ref.current;
+        if (!current) return;
+
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIntersecting(entry.isIntersecting);
-            },
-            { threshold }
+            ([entry]) => setIntersecting(entry.isIntersecting),
+            options
         );
 
-        if (ref.current) observer.observe(ref.current);
+        observer.observe(current);
 
         return () => {
-            if (ref.current) observer.unobserve(ref.current);
+            observer.disconnect();
         };
-    }, [ref, threshold]);
+    }, [ref, options]);
 
     return isIntersecting;
 }
 
-// Wrapper for triggering animations on enter and leave
+/**
+ * Wrapper for triggering animations on enter and leave
+ */
 function SectionWrapper({
     children,
     onEnter,
@@ -48,7 +60,7 @@ function SectionWrapper({
     onLeave: () => void;
 }) {
     const ref = useRef<HTMLDivElement>(null);
-    const isVisible = useOnScreen(ref);
+    const isVisible = useOnScreen<HTMLDivElement>(ref);
 
     useEffect(() => {
         if (isVisible) {
@@ -58,25 +70,18 @@ function SectionWrapper({
         }
     }, [isVisible, onEnter, onLeave]);
 
-    return (
-        <div
-            ref={ref}
-
-        >
-            {children}
-        </div>
-    );
+    return <div ref={ref}>{children}</div>;
 }
 
 export default function Page() {
     const reloadSection = (sectionName: string) => {
         console.log(`Animation/Reload triggered for ${sectionName}`);
-        // ✅ Place your animation start or data reload logic here
+        // Place animation start or data reload logic here
     };
 
     const resetSection = (sectionName: string) => {
         console.log(`Reset triggered for ${sectionName}`);
-        // ✅ Place your animation reset logic here
+        // Place animation reset logic here
     };
 
     return (
@@ -89,8 +94,6 @@ export default function Page() {
             >
                 <HeroSection />
             </SectionWrapper>
-
-
 
             <SectionWrapper
                 onEnter={() => reloadSection("About")}
@@ -106,15 +109,12 @@ export default function Page() {
                 <ServicesSection />
             </SectionWrapper>
 
-
-
             <SectionWrapper
-                onEnter={() => reloadSection("Services")}
-                onLeave={() => resetSection("Services")}
+                onEnter={() => reloadSection("Clients List")}
+                onLeave={() => resetSection("Clients List")}
             >
                 <BlueThemeOrgList />
             </SectionWrapper>
-
 
             <SectionWrapper
                 onEnter={() => reloadSection("Projects")}
@@ -138,16 +138,13 @@ export default function Page() {
             </SectionWrapper>
 
             <SectionWrapper
-                onEnter={() => reloadSection("Contact")}
-                onLeave={() => resetSection("Contact")}
+                onEnter={() => reloadSection("Certifications")}
+                onLeave={() => resetSection("Certifications")}
             >
                 <CertificationsSection />
             </SectionWrapper>
-
-
 
             <SiteFooter />
         </main>
     );
 }
-

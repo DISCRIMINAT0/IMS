@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,13 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AnimatedSection from "@/components/animated-section";
 import AnimatedText from "@/components/animated-text";
 
-import { useRouter } from "next/navigation"
-
-
-
 gsap.registerPlugin(ScrollTrigger);
-
-
 
 const DATA = [
     { item: "Stainless Steel Plate grade 430", category: "Metal" },
@@ -85,24 +79,20 @@ const DATA = [
     { item: "Smart LED TV", category: "Household Item" },
     { item: "Oil and Air Filters", category: "Lubricants" },
 ];
-export default function Clients() {
-    const router = useRouter()
-    const pathname = usePathname();
 
+export default function CategoriesSection() {
+
+    const pathname = usePathname();
+    const router = useRouter(); // ✅ router instance
     const headerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
 
     const [selectedCategory, setSelectedCategory] = useState("All");
-    const [visibleCount, setVisibleCount] = useState(5);
 
     const categories = [
         "All",
         ...Array.from(
-            new Set(
-                DATA.map((d) =>
-                    d.category.trim() === "" ? "Uncategorized" : d.category
-                )
-            )
+            new Set(DATA.map((d) => (d.category.trim() === "" ? "Uncategorized" : d.category)))
         ).sort(),
     ];
 
@@ -115,9 +105,7 @@ export default function Clients() {
                     : d.category === selectedCategory
             );
 
-    const visibleItems = filteredItems.slice(0, visibleCount);
-
-    // GSAP scroll animations for header and cards
+    // GSAP animations
     useEffect(() => {
         const ctx = gsap.context(() => {
             if (headerRef.current) {
@@ -152,7 +140,7 @@ export default function Clients() {
         });
 
         return () => ctx.revert();
-    }, [selectedCategory, visibleCount]);
+    }, [selectedCategory]);
 
     // Hover animations
     useEffect(() => {
@@ -183,27 +171,22 @@ export default function Clients() {
                 el.removeEventListener("mouseleave", leaveHandlers[i]);
             });
         };
-    }, [visibleItems]);
+    }, [filteredItems]);
 
-    // Scroll smoothly to #category-items on route/hash change with offset for fixed header
+    // Scroll to section on hash change
     useEffect(() => {
         if (typeof window === "undefined") return;
         if (window.location.hash === "#category-items") {
             const el = document.getElementById("category-items");
             if (el) {
                 setTimeout(() => {
-                    const yOffset = -80; // Adjust this to your fixed header height if any
+                    const yOffset = -80;
                     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
                     window.scrollTo({ top: y, behavior: "smooth" });
-                }, 300); // 300ms delay to ensure element is rendered and animated
+                }, 300);
             }
         }
     }, [pathname]);
-
-    function onCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setSelectedCategory(e.target.value);
-        setVisibleCount(5);
-    }
 
     return (
         <AnimatedSection
@@ -213,11 +196,7 @@ export default function Clients() {
         >
             <div className="container px-6 max-w-7xl mx-auto">
                 {/* Header */}
-                <div
-                    ref={headerRef}
-                    className="text-center max-w-3xl mx-auto mb-10"
-                    aria-label="Product Categories Header"
-                >
+                <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-10">
                     <AnimatedText
                         as="h2"
                         text="Our Product Categories"
@@ -227,15 +206,13 @@ export default function Clients() {
                     <p className="mt-3 text-blue-200 text-lg max-w-xl mx-auto">
                         Browse our wide range of products by category.
                     </p>
-
-
                 </div>
 
                 {/* Dropdown */}
                 <div className="max-w-xs mx-auto mb-12">
                     <select
                         value={selectedCategory}
-                        onChange={onCategoryChange}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
                         aria-label="Filter items by category"
                         className="w-full px-5 py-3 rounded-lg border border-transparent
               bg-white/10 backdrop-blur-md text-white font-semibold shadow-md
@@ -250,19 +227,13 @@ export default function Clients() {
                 </div>
 
                 {/* Cards */}
-                <div
-                    ref={cardsRef}
-                    className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-                    aria-label="Filtered items"
-                >
-                    {visibleItems.map(({ item, category }) => (
+                <div ref={cardsRef} className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {filteredItems.map(({ item, category }) => (
                         <Card
                             key={item + category}
                             className="bg-white/10 backdrop-blur-lg text-white rounded-xl shadow-lg cursor-pointer
                 border border-white/20 hover:border-blue-300
                 transition-transform transform"
-                            tabIndex={0}
-                            style={{ fontFeatureSettings: "'liga' off" }}
                         >
                             <CardHeader>
                                 <CardTitle className="text-lg font-semibold tracking-wide">
@@ -277,22 +248,18 @@ export default function Clients() {
                         </Card>
                     ))}
                 </div>
-
-                {/* Show More Button */}
-                {visibleCount < filteredItems.length && (
-                    <div className="flex justify-center mt-12">
-                        <button
-                            onClick={() => router.push("/categories")}
-                            className="px-10 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md
+                {/* Back Button */}
+                <div className="flex justify-center mt-12">
+                    <button
+                        onClick={() => router.back()} // ✅ goes to previous page
+                        className="px-10 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md
   hover:bg-blue-400 transition focus:outline-none focus:ring-4 focus:ring-blue-300"
-                        >
-                            Show More
-                        </button>
-                    </div>
-                )}
-
-                <p className="mt-4 text-blue-200 text-lg max-w-xl mx-auto  text-center">
-                    Moreover we deal in other items too and participate in Tender and&nbsp;respond&nbsp;to&nbsp;RFQ (Request for Quotation)
+                    >
+                        ← Back
+                    </button>
+                </div>
+                <p className="mt-4 text-blue-200 text-lg max-w-xl mx-auto text-center">
+                    Moreover we deal in other items too and participate in Tender and respond to RFQ (Request for Quotation)
                 </p>
             </div>
         </AnimatedSection>
