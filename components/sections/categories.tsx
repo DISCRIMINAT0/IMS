@@ -191,7 +191,7 @@ export default function CategoriesSection() {
     return (
         <AnimatedSection
             id=""
-            className="bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#3949ab] text-white py-14 scroll-mt-24"
+            className="pt-30 bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#3949ab] text-white py-14 scroll-mt-28"
             aria-label="Our product categories"
         >
             <div className="container px-6 max-w-7xl mx-auto">

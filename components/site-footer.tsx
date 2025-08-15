@@ -1,19 +1,46 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Linkedin, MapPin, Mail } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useEffect } from "react";
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
+  const router = useRouter();
+
   const links = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#services", label: "Services" },
-    { href: "#clients", label: "Clients" },
-    { href: "#projects", label: "Projects" },
-    { href: "#contact", label: "Contact" },
-    { href: "#certifications", label: "Certifications" },
+    { href: "home", label: "Home" },
+    { href: "about", label: "About" },
+    { href: "services", label: "Services" },
+    { href: "clients", label: "Clients" },
+    { href: "projects", label: "Projects" },
+    { href: "contact", label: "Contact" },
+    { href: "certifications", label: "Certifications" },
   ];
+
+  // After navigation, scroll to hash target
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const target = document.getElementById(hash.substring(1));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, []);
+
+  const handleLinkClick = (id: string) => {
+    if (window.location.pathname !== "/") {
+      router.push(`/#${id}`);
+    } else {
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
 
   return (
     <footer className="relative">
@@ -60,23 +87,25 @@ export default function SiteFooter() {
           </div>
 
           {/* Quick Links */}
+          {/* Quick Links */}
           <nav className="text-center md:text-left">
             <h3 className="font-semibold mb-4 text-blue-300 uppercase tracking-wide border-b border-blue-800/60 pb-2">
               Quick Links
             </h3>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm place-items-center md:place-items-start">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
+                  <button
+                    onClick={() => handleLinkClick(l.href)}
                     className="block px-2 py-1 rounded-md text-blue-100/90 hover:text-white hover:bg-blue-800/40 transition-colors"
                   >
                     {l.label}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
           </nav>
+
 
           {/* Contact Info */}
           <div className="text-center md:text-left max-w-md md:max-w-none mx-auto">
@@ -117,74 +146,3 @@ export default function SiteFooter() {
     </footer>
   );
 }
-
-
-
-const DATA = [
-  { item: "Stainless Steel Plate grade 430", category: "Metal" },
-  { item: "Instrument Cable", category: "Electonics" },
-  { item: "Compressor Chiller", category: "HVAC" },
-  { item: "Combination Power Receptacle", category: "Electonics" },
-  { item: "Helium Gas Cylinder", category: "Gases" },
-  { item: "Laser Engraving Machine", category: "Industrial" },
-  { item: "Gloves", category: "PPE" },
-  { item: "Valve and Purifier", category: "Hardware" },
-  { item: "Ducted PP Fume Hood", category: "Pharma/Laboratory" },
-  { item: "Rozette OPEX", category: "Electonics" },
-  { item: "AFL Lamps", category: "Airport" },
-  { item: "Tool Kit", category: "Hardware" },
-  { item: "Chiller Installation and Testing", category: "HVAC" },
-  { item: "Tire Tubes and Flapper", category: "Rubber Goods" },
-  { item: "Bag Filter", category: "Airport" },
-  { item: "Hydraulic Metal Shearing Machine", category: "Industrial" },
-  { item: "Gloves", category: "PPE" },
-  { item: "Portable Crack Measurement Microscope", category: "Instrument" },
-  { item: "Tractor Spare Parts", category: "Hardware" },
-  { item: "Refrigerator", category: "Household Item" },
-  { item: "Pump Head for Precision Tubing L/S Easy-Load", category: "Pharma/Laboratory" },
-  { item: "Safety Shoes", category: "PPE" },
-  { item: "Passenger Boarding Bridges", category: "Airport" },
-  { item: "Chemical Storage Cabinet", category: "Pharma/Laboratory" },
-  { item: "Furniture Item for CAA Officers Mess Rawal Road", category: "Household Item" },
-  { item: "Carbon Steel Gate Valve", category: "Hardware" },
-  { item: "Oshkosh Striker Spare Parts", category: "Airport" },
-  { item: "IC", category: "Electonics" },
-  { item: "Air Conditioner", category: "HVAC" },
-  { item: "Microcontroller Chip", category: "Electonics" },
-  { item: "Range Finder", category: "Instrument" },
-  { item: "Air Conditioner", category: "HVAC" },
-  { item: "Carrier Board (with CPU) & Docking Board", category: "Airport" },
-  { item: "Bed Sheet", category: "Household Item" },
-  { item: "Toilet Paper", category: "Household Item" },
-  { item: "Tripod", category: "Hardware" },
-  { item: "Panel Filters for Computer Room Air Conditioning", category: "Airport" },
-  { item: "Trolley 10x7 sft with complete Hydraulic Loading", category: "Airport" },
-  { item: "Bag Filter", category: "Airport" },
-  { item: "Lathe Machine", category: "Industrial" },
-  { item: "Portable Welding Machine", category: "Industrial" },
-  { item: "Welding Rods", category: "Instrument" },
-  { item: "Silicon and Joint Filling Materials", category: "Chemicals" },
-  { item: "Auto Quick Saw", category: "Hardware" },
-  { item: "Dehumidifier", category: "Hardware" },
-  { item: "MS Pipes and Fittings for Chilled Water", category: "Metal" },
-  { item: "AFLS LED Lights for Primary Runway", category: "Airport" },
-  { item: "Clover Lapping Compounds", category: "Chemicals" },
-  { item: "Critical Spares for Maintenance of York (Chiller)", category: "Airport" },
-  { item: "Office Furniture for Additional Directors", category: "Household Item" },
-  { item: "Equipment’s for CATI Cricket Ground", category: "Hardware" },
-  { item: "Hydraulic Oil & Hydraulic Oil-Filters 10 Micron", category: "Lubricants" },
-  { item: "PVC Box", category: "Electonics" },
-  { item: "Counter Chairs", category: "Household Item" },
-  { item: "Mess Articles (Dining & Serving)", category: "Household Item" },
-  { item: "DENCO Precision AC Unit", category: "HVAC" },
-  { item: "Public Address System", category: "Airport" },
-  { item: "Gym Items", category: "Household Item" },
-  { item: "Battery Bank for Scrubber", category: "Airport" },
-  { item: "Vending Machine", category: "Commercial" },
-  { item: "Coffee Machine", category: "Commercial" },
-  { item: "York Chiller Parts", category: "Airport" },
-  { item: "Photostat Paper Reams", category: "Stationary" },
-  { item: "Outdoor Stadium Chairs", category: "" },
-  { item: "Smart LED TV", category: "Household Item" },
-  { item: "Oil and Air Filters", category: "Lubricants" },
-];

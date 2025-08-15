@@ -6,15 +6,16 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge"
 import AnimatedSection from "@/components/animated-section"
 import OptimizedImage from "@/components/OptimizedImage";
+import Link from "next/link";
 
-const STATUS = {
+export const STATUS = {
     Ongoing: "bg-blue-100 text-blue-800",
     Completed: "bg-green-100 text-green-800",
     Planned: "bg-amber-100 text-amber-800",
     Available: "bg-purple-100 text-purple-800",
 }
 
-const PROJECTS = [
+export const PROJECTS = [
     {
         id: "d1",
         title: "AFL (Airfield Runway Lights) Lamps",
@@ -271,6 +272,15 @@ export default function ProjectsSection() {
                         </svg>
                     </button>
                 </div>
+            </div>
+
+            <div className="flex justify-center mt-8">
+                <Link
+                    href="/projects"
+                    className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-400 transition"
+                >
+                    View All Projects
+                </Link>
             </div>
 
             {/* Custom Scrollbar (Optional) */}

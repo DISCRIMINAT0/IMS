@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import gsap from "gsap";
@@ -30,8 +31,12 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("home");
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   // Set active based on scroll position
   useEffect(() => {
+    if (pathname !== "/") return; // Only set active on homepage
     const triggers: ScrollTrigger[] = [];
 
     NAV_ITEMS.forEach((item) => {
@@ -40,12 +45,12 @@ export default function SiteHeader() {
 
       const t = ScrollTrigger.create({
         trigger: el,
-        start: "top top+=64", // start when section top reaches header height
-        end: "bottom top+=64", // end when section bottom reaches header height
+        start: "top top+=64",
+        end: "bottom top+=64",
         onToggle: (self) => {
           if (self.isActive) setActive(item.id);
         },
-        scrub: true // keeps updating during scroll
+        scrub: true
       });
 
       triggers.push(t);
@@ -54,7 +59,7 @@ export default function SiteHeader() {
     return () => {
       triggers.forEach((t) => t.kill());
     };
-  }, []);
+  }, [pathname]);
 
   const scrollToCenter = (id: string) => {
     const el = document.getElementById(id);
@@ -71,6 +76,26 @@ export default function SiteHeader() {
     gsap.to(window, { duration: 0.8, ease: "power2.out", scrollTo: targetY });
   };
 
+  const handleNavClick = (id: string) => {
+    if (pathname === "/") {
+      scrollToCenter(id);
+    } else {
+      // Save target section in sessionStorage
+      sessionStorage.setItem("scrollTarget", id);
+      router.push("/");
+    }
+  };
+
+  // Listen for page load and scroll to section if coming from another page
+  useEffect(() => {
+    if (pathname !== "/") return;
+    const target = sessionStorage.getItem("scrollTarget");
+    if (target) {
+      sessionStorage.removeItem("scrollTarget");
+      setTimeout(() => scrollToCenter(target), 300); // small delay to ensure DOM ready
+    }
+  }, [pathname]);
+
   const NavLink = useMemo(
     () =>
       function NavLink({ item }: { item: NavItem }) {
@@ -79,7 +104,7 @@ export default function SiteHeader() {
           <button
             onClick={() => {
               setOpen(false);
-              scrollToCenter(item.id);
+              handleNavClick(item.id);
             }}
             className={`px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 
               ${isActive
@@ -92,13 +117,13 @@ export default function SiteHeader() {
           </button>
         );
       },
-    [active]
+    [active, pathname]
   );
 
   return (
     <header
       id="site-header"
-      className="fixed  top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
+      className="fixed top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60"
     >
       <div className="mx-auto container h-16 flex items-center justify-between px-4 md:px-6">
         {/* Logo */}
@@ -119,8 +144,6 @@ export default function SiteHeader() {
               <span className="text-blue-700 font-montserrat uppercase tracking-widest">
                 INTERNATIONAL MARKETING SERVICES
               </span>
-
-
             </div>
             <div className="italic text-[10px] md:text-xs text-slate-500 truncate max-w-full">
               "Where Global Demand Meets Reliable Supply"
@@ -134,7 +157,7 @@ export default function SiteHeader() {
             <NavLink key={item.id} item={item} />
           ))}
           <Button
-            onClick={() => scrollToCenter("contact")}
+            onClick={() => handleNavClick("contact")}
             className="bg-blue-600 hover:bg-blue-700"
           >
             Request Quote
@@ -164,7 +187,7 @@ export default function SiteHeader() {
                     : "text-slate-700 hover:text-blue-700 hover:bg-blue-50"
                   }`}
                 onClick={() => {
-                  scrollToCenter(item.id);
+                  handleNavClick(item.id);
                   setOpen(false);
                 }}
               >
@@ -173,7 +196,7 @@ export default function SiteHeader() {
             ))}
             <Button
               onClick={() => {
-                scrollToCenter("contact");
+                handleNavClick("contact");
                 setOpen(false);
               }}
               className="w-full bg-blue-600 hover:bg-blue-700"
