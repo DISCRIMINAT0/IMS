@@ -33,14 +33,7 @@ export const PROJECTS = [
         summary: "Provision of CCR units for airfield lighting systems from ATG AIRPORTS, UK.",
         image: "/project/ccr.jpg"
     },
-    {
-        id: "d3",
-        title: "Spares for ADBSagegate A-VDGS Type T1",
-        client: "ADBSAFEGATE, UAE",
-        status: "Available",
-        summary: "Supply of spare parts for ADBSagegate A-VDGS Type T1 from ADBSAFEGATE, UAE.",
-        image: "/project/avds.jpg"
-    },
+
     {
         id: "d4",
         title: "AFL Cable & Isolation Transformer",
