@@ -165,7 +165,7 @@ export default function HeroSection() {
                     {/* Right Column */}
                     <div ref={imageRef} className="flex justify-center relative">
                         <OptimizedImage
-                            src="/image.png"
+                            src="/hero.jpg"
                             alt="Engineering and Technical Equipment"
                             width={500}
                             height={400}

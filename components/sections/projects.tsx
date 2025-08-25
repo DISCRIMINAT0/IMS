@@ -88,7 +88,7 @@ export const PROJECTS = [
         client: "AAF INTERNATIONAL",
         status: "Available",
         summary: "Bag filters for industrial and HVAC applications from AAF INTERNATIONAL.",
-        image: "/project/bagfilter.jpeg"
+        image: "/project/bagfilter2.png"
     },
     {
         id: "d11",
@@ -113,6 +113,14 @@ export const PROJECTS = [
         status: "Available",
         summary: "Tour guide communication systems from WILLIAMS AV.",
         image: "/project/tgui.jpg"
+    },
+    {
+        id: "d14",
+        title: "ARFF Vehicle Parts",
+        client: "Multiple OEMs",
+        status: "Available",
+        summary: "Specialized spare parts and components for Aircraft Rescue and Firefighting (ARFF) vehicles.",
+        image: "/project/arffparts.jpg",
     },
 ] as const
 

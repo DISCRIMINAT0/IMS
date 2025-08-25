@@ -84,8 +84,8 @@ export default function ServicesSection() {
                             {
                                 icon: PackageSearch,
                                 title: "General Order Supply",
-                                img: "/gos.jpg",
-                                blur: "/blur/gos.jpg",
+                                img: "/gos2.png",
+                                blur: "/blur/gos2.png",
                                 items: [
                                     "Office supplies & equipment",
                                     "Industrial tools & machinery",
@@ -95,8 +95,8 @@ export default function ServicesSection() {
                             {
                                 icon: ShieldCheck,
                                 title: "Importation Services",
-                                img: "/impexp.jpeg",
-                                blur: "/blur/impexp.jpeg",
+                                img: "/impexp2.png",
+                                blur: "/blur/impexp2.png",
                                 items: [
                                     "Product sourcing & procurement",
                                     "Quality control & assurance",
@@ -106,8 +106,8 @@ export default function ServicesSection() {
                             {
                                 icon: Truck,
                                 title: "Logistics & Delivery",
-                                img: "/logdel.jpeg",
-                                blur: "/blur/logdel.jpeg",
+                                img: "/logdel2.png",
+                                blur: "/blur/logdel2.png",
                                 items: [
                                     "Nationwide distribution",
                                     "Vendor coordination",
@@ -117,8 +117,8 @@ export default function ServicesSection() {
                             {
                                 icon: Wrench,
                                 title: "Local Purchase Solutions",
-                                img: "/locpurc.webp",
-                                blur: "/blur/locpurc.webp",
+                                img: "/locpur2.png",
+                                blur: "/blur/locpurc2.png",
                                 items: [
                                     "Swift sourcing & delivery",
                                     "Competitive local pricing",

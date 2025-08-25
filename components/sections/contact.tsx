@@ -108,23 +108,27 @@ export default function ContactSection() {
                     <div className="space-y-6">
                         <ContactCard
                             data-stagger
+                            className="p-10 rounded-xl shadow-md bg-white"
                             title="Head Office (Karachi)"
                             address="A-149, Block C, North Nazimabad, Karachi-74700"
                             phone="+92 321 2565152"
                         />
                         <ContactCard
                             data-stagger
+                            className="p-10 rounded-xl shadow-md bg-white"
                             title="Corporate Office (Karachi)"
                             address="Office #418, Industrial Town Plaza, SR-3/20, Serai Quarters, Sharah-e-Liaquat, Karachi-74000"
                         />
                         <ContactCard
                             data-stagger
+                            className="p-10 rounded-xl shadow-md bg-white"
                             title="Rawalpindi Branch"
                             address="Shop #217/19, Saleh Market, Adamjee Road, Saddar Cantt, Rawalpindi-46000"
                             phone="+92 51 5125553"
                         />
                         <ContactCard
                             data-stagger
+                            className="p-10 rounded-xl shadow-md bg-white"
                             title="Email"
                             email="info@ims-pk.com"
                         />
